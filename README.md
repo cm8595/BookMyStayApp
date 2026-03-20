@@ -1,68 +1,48 @@
-# Use Case 3: Centralized Room Inventory Management
+# Hotel Booking Management System – Use Case 4
 
-## Project Overview
+## Use Case 4: Room Search & Availability Check
 
-This project presents the design and implementation of a Hotel Booking Management System, illustrating the practical application of Core Java and fundamental data structures in real-world scenarios. The system is developed incrementally, with each use case introducing a specific concept that addresses common software engineering challenges such as fair request handling, inventory consistency, and prevention of double-booking.
+### Goal
+Enable guests to view available rooms and their details without modifying system state, reinforcing safe data access and clear separation of responsibilities.
 
-Use Case 3 introduces **centralized room inventory management** using a `HashMap` to maintain a single source of truth for room availability.
+### Actors
+- **Guest** – initiates a search to view available room options.
+- **Search Service** – handles read-only access to inventory and room information.
 
----
+### Flow
+1. Guest initiates a room search request.
+2. The system retrieves availability data from the centralized inventory.
+3. Room details and pricing are obtained from room objects.
+4. Unavailable room types are filtered out.
+5. Available room types and their details are displayed.
+6. System state remains unchanged.
 
-## Use Case Goal
+### Key Concepts
+- **Read-Only Access:** Search operations do not alter inventory data.
+- **Defensive Programming:** Only valid and available room types are displayed.
+- **Separation of Concerns:** Search functionality is isolated from booking and inventory update logic.
+- **Inventory as State Holder:** Inventory stores current availability counts; no updates occur during searches.
+- **Domain Model Usage:** Room objects provide descriptive information without duplicating data in the inventory.
+- **Validation Logic:** Room types with zero availability are excluded.
 
-- Replace scattered availability variables from previous use cases with a **centralized, consistent data structure**.
-- Demonstrate how a `HashMap` provides fast lookup, updates, and a scalable solution for managing room inventory.
-- Maintain separation of concerns: room characteristics remain part of the domain model, while inventory is managed in a dedicated class.
+### Key Requirements
+- Retrieve room availability from the centralized inventory.
+- Display only room types with availability greater than zero.
+- Show room details and pricing using room domain objects.
+- Ensure inventory data is not modified during search operations.
+- Maintain a clear boundary between search logic and booking logic.
 
----
+### Key Benefits
+- Accurate availability visibility without state mutation.
+- Reduced risk of accidental inventory corruption.
+- Clear separation between read-only and write operations.
 
-## Actor
+### Drawbacks of Previous Use Case
+- Use Case 3 introduced centralized inventory but did not differentiate between read and write access.
+- Without explicit separation, inventory could be accidentally modified during non-booking operations.
 
-- **RoomInventory** – Responsible for managing and exposing room availability across the system.
+### How to Run
+1. Compile the Java file:
 
----
-
-## Flow
-
-1. The system initializes the inventory component.
-2. Room types are registered with their available counts.
-3. Availability is stored and retrieved from a centralized `HashMap`.
-4. Updates to availability are performed through controlled methods.
-5. The current inventory state is displayed when requested.
-
----
-
-## Key Concepts Used
-
-- **Problem of Scattered State:** Previous use case managed availability in separate variables, causing inconsistency and poor scalability.
-- **HashMap:** `HashMap<String, Integer>` maps room types to their available counts, allowing O(1) average-time access and updates.
-- **Single Source of Truth:** All availability data is centralized, eliminating discrepancies.
-- **Encapsulation of Inventory Logic:** Inventory operations are accessed through dedicated methods, reducing coupling.
-- **Separation of Concerns:** Room characteristics remain in the Room model; inventory logic is managed separately.
-- **Scalability:** Adding new room types only requires adding a new entry to the map.
-
----
-
-## Key Requirements
-
-- Initialize room availability using a constructor.
-- Store room availability using a `HashMap`.
-- Provide methods to retrieve current availability.
-- Support controlled updates to room availability.
-- Ensure inventory state remains consistent across operations.
-
----
-
-## Key Benefits
-
-- Centralized, consistent room availability
-- Fast lookup and updates using HashMap
-- Improved scalability when introducing new room types
-- Reduced risk of inconsistent system state
-
----
-
-## Drawbacks of Previous Use Case
-
-- Availability was managed using independent variables.
-- This approach does not scale and increases the risk of inconsistent system state as complexity grows.
+```bash
+javac UseCase4HotelBookingApp.java
