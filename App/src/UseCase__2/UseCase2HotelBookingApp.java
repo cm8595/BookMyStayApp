@@ -1,4 +1,4 @@
-package UseCase_2;
+package UseCase__2;
 /**
  * MAIN CLASS - UseCase2HotelBookingApp
  *

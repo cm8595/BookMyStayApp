@@ -1,4 +1,4 @@
-package UseCase_2;
+package UseCase__2;
 /**
  * Concrete class representing a Single Room.
  */
