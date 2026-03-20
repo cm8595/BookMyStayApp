@@ -1,95 +1,62 @@
-# 🏨 Use Case 1 – Application Entry & Welcome Message
+# Use Case 2 – Basic Room Types & Static Availability
 
-## 📌 Overview
-
-This module represents the **first step** in building the *Book My Stay – Hotel Booking Management System*.
-
-The purpose of this use case is to establish a **clear and predictable entry point** for the application and verify that the system starts successfully.
+## Overview
+This use case introduces object-oriented domain modeling using abstract classes and inheritance.  
+The system demonstrates basic room types (Single, Double, Suite) and their static availability.
 
 ---
 
-## 🎯 Goal
-
-To demonstrate how a Java application:
-
-* Starts execution
-* Uses the `main()` method
-* Displays output to the console
+## Goal
+- Introduce object modeling through abstraction
+- Define common attributes for all room types
+- Display room details and availability
+- Lay the foundation for future inventory management
 
 ---
 
-## 🚀 Features
-
-* Application starts from the `main()` method
-* Displays a welcome message
-* Shows application name and version
-* Confirms successful startup
-* Clean program termination
-
----
-
-## 🧠 Concepts Covered
-
-* Java Class Structure
-* `main()` Method (JVM Entry Point)
-* `static` Keyword
-* Console Output using `System.out.println()`
-* String Literals
-* Method Invocation
-* Linear Execution Flow
-* JavaDoc Comments and Annotations
+## Features
+- Abstract `Room` class defines shared attributes
+- Concrete room classes (`SingleRoom`, `DoubleRoom`, `SuiteRoom`) extend the abstract class
+- Room objects created in the application entry point
+- Availability stored as simple variables
+- Room details and availability printed to the console
 
 ---
 
-## 📂 File Structure
-
-```
-UseCase1HotelBookingApp.java
-```
-
----
-
-## ▶️ How to Run
-
-1. Compile the program:
-
-   ```bash
-   javac UseCase1HotelBookingApp.java
-   ```
-
-2. Run the program:
-
-   ```bash
-   java UseCase1HotelBookingApp
-   ```
+## Key Concepts
+- **Abstraction:** `Room` abstract class models general properties
+- **Inheritance:** Concrete room types reuse common behavior
+- **Polymorphism:** Room objects referenced using the abstract type
+- **Encapsulation:** Room attributes are protected
+- **Static Availability Representation:** Availability stored as separate variables
 
 ---
 
-## 💻 Sample Output
+## File Structure
 
-```
-=======================================
- Welcome to Hotel Booking System v1.0 
-=======================================
-Application started successfully.
-```
+src/
+├─ Room.java
+├─ SingleRoom.java
+├─ DoubleRoom.java
+├─ SuiteRoom.java
+└─ UseCase2HotelBookingApp.java
+README.md
 
----
-
-## 👨‍💻 Author
-
-**Chaitanya Bhargav Malakonda**
 
 ---
 
-## 📌 Notes
+## How to Run
 
-* No business logic is implemented in this stage
-* This use case focuses only on application startup
-* Acts as the foundation for upcoming use cases
+1. Compile all files:
+```bash
+javac *.java
 
----
+Run the application:
 
-## 🔜 Next Step
+java UseCase2HotelBookingApp
 
-Proceed to **Use Case 2**, where the system will begin handling core booking-related logic.
+Output will show room details and availability.
+
+Author
+
+Chaitanya Bhargav Malakonda
