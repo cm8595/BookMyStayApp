@@ -1,62 +1,63 @@
-# Book My Stay App – Use Case 10: Booking Cancellation & Inventory Rollback
+# Book My Stay App – Use Case 12: Data Persistence & System Recovery
 
 ## 📌 Overview
-This module introduces booking cancellation functionality with safe rollback mechanisms. It ensures that inventory and booking states remain consistent after reversing a confirmed booking.
+This module introduces persistence and recovery using file-based storage. It ensures that system state survives application restarts.
 
 ---
 
 ## 🎯 Objective
-- Enable safe cancellation of bookings
-- Restore system state reliably
-- Maintain inventory consistency
+- Persist inventory and booking data
+- Restore system state after restart
+- Handle failures safely
 
 ---
 
 ## 👤 Actors
-- **Guest**: Initiates cancellation
-- **Cancellation Service**: Handles validation and rollback
+- **System**: Handles startup and shutdown
+- **Persistence Service**: Manages save/load operations
 
 ---
 
 ## 🔄 Flow
-1. Guest requests cancellation
-2. System validates booking existence
-3. Room ID is pushed to rollback stack
-4. Inventory is restored
-5. Booking marked inactive
+1. System starts
+2. Loads previous state (if exists)
+3. Performs operations
+4. Saves state before shutdown
+5. Restores state on next run
 
 ---
 
 ## 🧠 Key Concepts
 
-### 1. Stack (LIFO)
-Used to track rollback operations:
-- Last booked → First cancelled
+### 1. Serialization
+Converts objects into byte stream for storage.
 
-### 2. State Reversal
-Undo allocation safely without breaking system
+### 2. Deserialization
+Reconstructs objects from stored data.
 
-### 3. Controlled Mutation
-Steps executed in strict order:
-- Record → Restore → Update
+### 3. Persistence
+Ensures data survives restarts.
 
-### 4. Validation
-Prevents:
-- Duplicate cancellations
-- Invalid booking IDs
+### 4. Stateful Systems
+Maintains continuity across executions.
+
+### 5. Failure Handling
+Gracefully handles:
+- Missing file
+- Corrupted data
 
 ---
 
 ## ✅ Features
-- Booking creation
-- Safe cancellation
-- Inventory restoration
-- Rollback tracking using stack
+- File-based persistence
+- Booking + inventory recovery
+- Safe startup fallback
+- Durable system state
 
 ---
 
 ## ⚠️ Previous Limitation
-Use Case 9 handled validation but lacked rollback capability.
+Earlier use cases lost all data on restart.
 
 ---
 
@@ -64,4 +65,4 @@ Use Case 9 handled validation but lacked rollback capability.
 
 ### Compile
 ```bash
-javac UseCase10BookingCancellation.java
+javac UseCase12DataPersistenceRecovery.java
