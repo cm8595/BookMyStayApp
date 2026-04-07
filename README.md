@@ -1,62 +1,62 @@
-# Book My Stay App – Use Case 10: Booking Cancellation & Inventory Rollback
+# Book My Stay App – Use Case 11: Concurrent Booking Simulation
 
 ## 📌 Overview
-This module introduces booking cancellation functionality with safe rollback mechanisms. It ensures that inventory and booking states remain consistent after reversing a confirmed booking.
+This module demonstrates how concurrent booking requests are handled safely using thread synchronization in Java.
+
+It simulates multiple users booking rooms simultaneously and ensures that inventory updates remain consistent.
 
 ---
 
 ## 🎯 Objective
-- Enable safe cancellation of bookings
-- Restore system state reliably
-- Maintain inventory consistency
+- Simulate concurrent booking requests
+- Prevent race conditions
+- Ensure thread-safe inventory updates
 
 ---
 
 ## 👤 Actors
-- **Guest**: Initiates cancellation
-- **Cancellation Service**: Handles validation and rollback
+- **Multiple Guests**: Generate booking requests
+- **Booking Processor Threads**: Process requests concurrently
 
 ---
 
 ## 🔄 Flow
-1. Guest requests cancellation
-2. System validates booking existence
-3. Room ID is pushed to rollback stack
-4. Inventory is restored
-5. Booking marked inactive
+1. Booking requests are added to a shared queue
+2. Multiple threads fetch requests
+3. Inventory updates happen in synchronized blocks
+4. System prevents overbooking
 
 ---
 
 ## 🧠 Key Concepts
 
-### 1. Stack (LIFO)
-Used to track rollback operations:
-- Last booked → First cancelled
+### 1. Race Condition
+Occurs when multiple threads modify shared data simultaneously.
 
-### 2. State Reversal
-Undo allocation safely without breaking system
+### 2. Thread Safety
+Ensures correct behavior under concurrent access.
 
-### 3. Controlled Mutation
-Steps executed in strict order:
-- Record → Restore → Update
+### 3. Shared Mutable State
+Queue + Inventory are shared resources.
 
-### 4. Validation
-Prevents:
-- Duplicate cancellations
-- Invalid booking IDs
+### 4. Critical Section
+Inventory update is protected using `synchronized`.
+
+### 5. Synchronization
+Ensures only one thread updates inventory at a time.
 
 ---
 
 ## ✅ Features
-- Booking creation
-- Safe cancellation
-- Inventory restoration
-- Rollback tracking using stack
+- Multi-threaded booking simulation
+- Shared request queue
+- Thread-safe inventory management
+- Prevention of double booking
 
 ---
 
 ## ⚠️ Previous Limitation
-Use Case 9 handled validation but lacked rollback capability.
+Earlier use cases assumed single-threaded execution.
 
 ---
 
@@ -64,4 +64,4 @@ Use Case 9 handled validation but lacked rollback capability.
 
 ### Compile
 ```bash
-javac UseCase10BookingCancellation.java
+javac UseCase11ConcurrentBookingSimulation.java
