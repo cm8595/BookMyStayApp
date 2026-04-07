@@ -1,46 +1,67 @@
-# Hotel Booking Management System – Use Case 6
+# Book My Stay App – Use Case 10: Booking Cancellation & Inventory Rollback
 
-## Use Case 6: Reservation Confirmation & Room Allocation
+## 📌 Overview
+This module introduces booking cancellation functionality with safe rollback mechanisms. It ensures that inventory and booking states remain consistent after reversing a confirmed booking.
 
-### Goal
-Confirm booking requests by assigning rooms safely while ensuring inventory consistency and preventing double-booking under all circumstances.
+---
 
-### Actors
-- **Booking Service** – processes queued booking requests and performs room allocation.
-- **Inventory Service** – maintains and updates room availability state.
+## 🎯 Objective
+- Enable safe cancellation of bookings
+- Restore system state reliably
+- Maintain inventory consistency
 
-### Flow
-1. Booking request is dequeued from the request queue.
-2. The system checks availability for the requested room type.
-3. A unique room ID is generated and assigned.
-4. The room ID is recorded to prevent reuse.
-5. Inventory count is decremented immediately.
-6. Reservation is confirmed.
+---
 
-### Key Concepts
-- **Set Data Structure:** Stores allocated room IDs to prevent duplicates.
-- **FIFO Queue:** Requests processed in arrival order.
-- **Atomic Operations:** Allocation + inventory update occurs together.
-- **Single Source of Truth:** Inventory immediately reflects current availability.
+## 👤 Actors
+- **Guest**: Initiates cancellation
+- **Cancellation Service**: Handles validation and rollback
 
-### Key Requirements
-- Retrieve booking requests from the queue in FIFO order.
-- Generate and assign a unique room ID for each confirmed reservation.
-- Prevent reuse of room IDs across all allocations.
-- Update inventory immediately after successful allocation.
-- Ensure allocation logic maintains system consistency.
+---
 
-### Key Benefits
-- Guaranteed uniqueness of room assignments
-- Immediate synchronization between booking and inventory
-- Elimination of double-booking scenarios
+## 🔄 Flow
+1. Guest requests cancellation
+2. System validates booking existence
+3. Room ID is pushed to rollback stack
+4. Inventory is restored
+5. Booking marked inactive
 
-### Drawbacks of Previous Use Case
-- Use Case 5 handled request ordering but did not confirm bookings.
-- Without allocation and uniqueness enforcement, queued requests could still result in conflicting assignments.
+---
 
-### How to Run
-1. Compile the Java file:
+## 🧠 Key Concepts
 
+### 1. Stack (LIFO)
+Used to track rollback operations:
+- Last booked → First cancelled
+
+### 2. State Reversal
+Undo allocation safely without breaking system
+
+### 3. Controlled Mutation
+Steps executed in strict order:
+- Record → Restore → Update
+
+### 4. Validation
+Prevents:
+- Duplicate cancellations
+- Invalid booking IDs
+
+---
+
+## ✅ Features
+- Booking creation
+- Safe cancellation
+- Inventory restoration
+- Rollback tracking using stack
+
+---
+
+## ⚠️ Previous Limitation
+Use Case 9 handled validation but lacked rollback capability.
+
+---
+
+## ▶️ How to Run
+
+### Compile
 ```bash
-javac UseCase6HotelBookingApp.java
+javac UseCase10BookingCancellation.java
